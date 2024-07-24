@@ -14,7 +14,17 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<CreateBook>());
+
+builder.Services.AddMediatR(cfg =>
+{
+    cfg.RegisterServicesFromAssemblyContaining<CreateBook>();
+    cfg.RegisterServicesFromAssemblyContaining<UpdateBook>();
+    cfg.RegisterServicesFromAssemblyContaining<DeleteBook>();
+    cfg.RegisterServicesFromAssemblyContaining<GetBookByIdQuery>();
+    cfg.RegisterServicesFromAssemblyContaining<GetAllBooksQuery>();
+});
+
+
 builder.Services.AddDbContext<BookContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 var app = builder.Build();
